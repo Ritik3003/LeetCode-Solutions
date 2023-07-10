@@ -4,7 +4,7 @@ void solveo(vector<vector <char>> &board, int n, int m, int i, int j){
         if(i<0 || j<0 || i>=n || j>=m || board[i][j]!='O'){
             return ;
         }
-        board[i][j]='A';
+        board[i][j]='#';
         solveo(board,n,m,i+1,j);
         solveo(board,n,m,i,j+1);
         solveo(board,n,m,i-1,j);
@@ -23,7 +23,7 @@ void solveo(vector<vector <char>> &board, int n, int m, int i, int j){
         }
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(grid[i][j]=='A'){
+                if(grid[i][j]=='#'){
                     grid[i][j]='O';
                 }else if(grid[i][j]=='O'){
                     grid[i][j]='X';
