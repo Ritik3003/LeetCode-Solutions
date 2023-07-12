@@ -5,7 +5,7 @@ public:
         int n=nums.size();
         int mini=INT_MAX;
         int ans=0;
-        for(int i=0; i<n-2; i++){
+        for(int i=0; i<n; i++){
             int start=i+1;
             int end=n-1;
             while(start<end){
