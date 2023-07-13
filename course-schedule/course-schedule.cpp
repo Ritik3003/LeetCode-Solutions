@@ -1,31 +1,31 @@
 class Solution {
 public:
-void solve(vector<int> adj[], vector<int>&visited, vector<int>&path_visited, bool&check, int i){
+bool solve(vector<int>adj[], vector<int>&visited,vector<int>&path_visited,int i){
     visited[i]=1;
     path_visited[i]=1;
     for(auto it: adj[i]){
         if(visited[it]==0){
-            solve(adj, visited,path_visited,check,it);
+            if(solve(adj,visited,path_visited,it)){
+                return true;
+            }
         }else if(visited[it] && path_visited[it]){
-            check=true;
-            return ;
+            return true;
         }
     }
     path_visited[i]=0;
+    return false;
 }
 
-    bool canFinish(int n, vector<vector<int>>& grid) {
+    bool canFinish(int n, vector<vector<int>>& graph) {
         vector<int> adj[n];
-        for(int i=0; i<grid.size(); i++){
-            adj[grid[i][1]].push_back(grid[i][0]);
+        for(int i=0; i<graph.size(); i++){
+            adj[graph[i][1]].push_back(graph[i][0]);
         }
         vector<int> visited(n,0);
         vector<int> path_visited(n,0);
-        for(int i=0; i<n;i++){
+        for(int i=0;i<n; i++){
             if(visited[i]==0){
-                bool check=false;
-                solve(adj,visited,path_visited,check,i);
-                if(check==true){
+                if(solve(adj,visited,path_visited,i)){
                     return false;
                 }
             }
