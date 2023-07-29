@@ -18,6 +18,7 @@ void union_set(int u, int v, vector<int>&parent, vector<int>&rank){
     }
 }
 
+
     int minCostConnectPoints(vector<vector<int>>& points) {
         int n=points.size();
         vector<pair<int,pair<int,int>>> adj;
@@ -27,12 +28,12 @@ void union_set(int u, int v, vector<int>&parent, vector<int>&rank){
                 adj.push_back({distance,{i,j}});
             }
         }
-        sort(adj.begin(),adj.end());
         int ans=0;
+        sort(adj.begin(),adj.end());
         int m=adj.size();
         vector<int> parent(m+1,0);
         vector<int> rank(m+1,0);
-        for(int i=0; i<=m; i++){
+        for(int i=1; i<=m; i++){
             parent[i]=i;
         }
         for(int i=0; i<m; i++){
@@ -40,7 +41,7 @@ void union_set(int u, int v, vector<int>&parent, vector<int>&rank){
             int v=findparent(adj[i].second.second,parent);
             if(u!=v){
                 ans+=adj[i].first;
-                union_set(u,v,parent,rank);
+                union_set(adj[i].second.first,adj[i].second.second,parent,rank);
             }
         }
         return ans;
