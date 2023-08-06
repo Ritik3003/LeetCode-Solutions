@@ -15,6 +15,7 @@ int solve(vector<int>&nums, vector<vector<int>>&dp, int i, int j){
     return dp[i][j]=ans;
 }
 
+
     int maxCoins(vector<int>& nums) {
         int n=nums.size();
         nums.push_back(1);
