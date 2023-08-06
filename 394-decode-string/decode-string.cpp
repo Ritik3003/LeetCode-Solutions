@@ -3,10 +3,11 @@ public:
 string solve(string &s, int &i){
     string ans="";
     while(i<s.size() && s[i]!=']'){
-        if(isdigit(s[i])){
+        if(i<s.size() && isdigit(s[i])){
             int k=0;
             while(i<s.size() && isdigit(s[i])){
-                k=k*10+(s[i++]-'0');
+                k=k*10+(s[i]-'0');
+                i++;
             }
             i++;
             string result=solve(s,i);
@@ -24,6 +25,6 @@ string solve(string &s, int &i){
 
     string decodeString(string s) {
         int i=0;
-        return solve(s,i);
+        return solve(s,i);   
     }
 };
