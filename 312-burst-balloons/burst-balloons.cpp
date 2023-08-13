@@ -8,7 +8,7 @@ public:
         // cout<<i<<' '<<j<<'\n';
         if(i>j) return 0;
         if(dp[i][j] != -1) return dp[i][j];
-        int maxi = INT_MIN;
+        int maxi = -1;
         for(int x = i ;x <= j ; x++){
             int temp = nums[x];
             if(i-1 >=0) temp*= nums[i-1];
