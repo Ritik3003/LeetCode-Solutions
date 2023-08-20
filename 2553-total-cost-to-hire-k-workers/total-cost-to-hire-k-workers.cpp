@@ -1,9 +1,10 @@
 class Solution {
 public:
     long long totalCost(vector<int>& costs, int k, int candidates) {
-        priority_queue<int,vector<int>,greater<int>> pq1,pq2;
+        priority_queue<int,vector<int>, greater<int>> pq1, pq2;
         int i=0;
-        int j=costs.size()-1;
+        int n=costs.size();
+        int j=n-1;
         long long int ans=0;
         while(k--){
             while(pq1.size()<candidates && i<=j){
@@ -21,11 +22,11 @@ public:
                 b=pq2.top();
             }
             if(a<=b){
-                pq1.pop();
                 ans+=a;
+                pq1.pop();
             }else{
-                pq2.pop();
                 ans+=b;
+                pq2.pop();
             }
         }
         return ans;
