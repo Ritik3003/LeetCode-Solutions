@@ -18,19 +18,21 @@ public:
             pq.pop();
             ans+=it1.second;
             ans+=it2.second;
-            if(--it1.first>0){
+            it1.first--;
+            it2.first--;
+            if(it1.first>0){
                 pq.push({it1.first,it1.second});
             }
-            if(--it2.first>0){
+            if(it2.first){
                 pq.push({it2.first,it2.second});
             }
         }
         if(pq.size()){
             auto it=pq.top();
+            pq.pop();
             if(it.first>1){
                 return "";
             }
-            pq.pop();
             ans+=it.second;
         }
         return ans;
