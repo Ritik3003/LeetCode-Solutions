@@ -10,7 +10,7 @@ public:
                     dp1[i]=1+dp1[j];
                 }
             }
-            cout<<dp1[i]<<" ";
+            // cout<<dp1[i]<<" ";
         }
         reverse(nums.begin(),nums.end());
         for(int i=0; i<n; i++){
@@ -22,12 +22,12 @@ public:
         }
         reverse(dp2.begin(),dp2.end());
         int ans=0;
-        cout<<"\n";
+        // cout<<"\n";
         for(int i=0; i<n; i++){
             if(dp1[i]>0 && dp2[i]>0){
                 ans=max(ans,dp1[i]+dp2[i]);
             }
-            cout<<dp2[i]<<" ";
+            // cout<<dp2[i]<<" ";
         }
         return n-ans-1;
     }
