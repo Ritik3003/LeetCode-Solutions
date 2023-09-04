@@ -1,20 +1,28 @@
 class Solution {
 public:
-    int maxCoins(vector<int>& nums) {
-        vector<vector<int>>dp(nums.size(), vector<int>(nums.size(), -1));
-        return dfs(nums, 0, nums.size()-1, dp);
+int solve(vector<int>&nums, vector<vector<int>>&dp, int i, int j){
+    if(i>j){
+        return 0;
     }
-    int dfs(vector<int>&nums, int i, int j, vector<vector<int>>&dp){
-        // cout<<i<<' '<<j<<'\n';
-        if(i>j) return 0;
-        if(dp[i][j] != -1) return dp[i][j];
-        int maxi = -1;
-        for(int x = i ;x <= j ; x++){
-            int temp = nums[x];
-            if(i-1 >=0) temp*= nums[i-1];
-            if(j+1 < nums.size()) temp*= nums[j+1];
-            maxi = max(maxi, dfs(nums, i, x-1, dp) + temp + dfs(nums, x+1, j, dp));
-        }
-        return dp[i][j] = maxi;
+    if(dp[i][j]!=-1){
+        return dp[i][j];
+    }
+    int ans=INT_MIN;
+    for(int k=i; k<=j; k++){
+        int step=solve(nums,dp,i,k-1)+solve(nums,dp,k+1,j)+nums[i-1]*nums[k]*nums[j+1];
+        ans=max(ans,step);
+    }
+    return dp[i][j]=ans;
+}
+
+
+    int maxCoins(vector<int>& nums) {
+        int n=nums.size();
+        nums.push_back(1);
+        reverse(nums.begin(),nums.end());
+        nums.push_back(1);
+        reverse(nums.begin(),nums.end());
+        vector<vector<int>> dp(n+2,vector<int>(n+2,-1));
+        return solve(nums,dp,1,n);
     }
 };
