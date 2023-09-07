@@ -11,26 +11,28 @@
  */
 class Solution {
 public:
-TreeNode* solve(vector<int>&p, vector<int>&i, int start, int end, int &index){
+TreeNode* solve(vector<int>&pre, vector<int>&in, int start, int end, int &index){
     if(start>end){
         return NULL;
     }
-    TreeNode *root=new TreeNode(p[index++]);
-    int x=0;
-    for(int j=start; j<=end; j++){
-        if(i[j]==root->val){
-            x=j;
+    TreeNode* root=new TreeNode(pre[index++]);
+    int mid=start;
+    for(int i=start; i<=end; i++){
+        if(root->val==in[i]){
+            mid=i;
             break;
         }
     }
-    root->left=solve(p,i,start,x-1,index);
-    root->right=solve(p,i,x+1,end,index);
+    root->left=solve(pre,in,start,mid-1,index);
+    root->right=solve(pre,in,mid+1,end,index);
     return root;
 }
-
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n=preorder.size();
+        if(n==0){
+            return NULL;
+        }
         int index=0;
-        int n=inorder.size();
         return solve(preorder,inorder,0,n-1,index);
     }
 };
