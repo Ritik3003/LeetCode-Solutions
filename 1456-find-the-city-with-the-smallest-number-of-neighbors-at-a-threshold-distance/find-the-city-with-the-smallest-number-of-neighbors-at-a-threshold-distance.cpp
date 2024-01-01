@@ -1,43 +1,40 @@
 class Solution {
 public:
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>> graph(n,vector<int>(n,1e9));
+    int findTheCity(int n, vector<vector<int>>& edges, int thresold) {
+        
+        vector<vector<int>> grid(n,vector<int>(n,1e9));
+        // vector<vector<int>> dist(n,vector<int>(n,1e9));
         for(int i=0; i<edges.size(); i++){
-            graph[edges[i][0]][edges[i][1]]=edges[i][2];
-            graph[edges[i][1]][edges[i][0]]=edges[i][2];
+            grid[edges[i][0]][edges[i][1]]=edges[i][2];
+            grid[edges[i][1]][edges[i][0]]=edges[i][2];
         }
         for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(i==j){
-                    graph[i][j]=0;
-                }
-            }
+            grid[i][i]=0;
         }
         for(int k=0; k<n; k++){
             for(int i=0; i<n; i++){
                 for(int j=0; j<n; j++){
-                    if(graph[i][k]==1e9 || graph[k][j]==1e9){
+                    if(grid[i][k]==1e9 || grid[k][j]==1e9){
                         continue;
                     }
-                    graph[i][j]=min(graph[i][j],graph[i][k]+graph[k][j]);
+                    grid[i][j]=min(grid[i][j],grid[i][k]+grid[k][j]);
                 }
             }
         }
-        int count=n;
-        int city=-1;
+        int ans=0;
+        int max=n;
         for(int i=0; i<n; i++){
-            int cnt=0;
+            int count=0;
             for(int j=0; j<n; j++){
-                if(graph[i][j]<=distanceThreshold){
-                    cnt++;
+                if(grid[i][j]<=thresold){
+                    count++;
                 }
             }
-            if(cnt<=count){
-                count=cnt;
-                city=i;
+            if(count<=max){
+                max=count;
+                ans=i;
             }
         }
-        return city;
-
+        return ans;
     }
 };
