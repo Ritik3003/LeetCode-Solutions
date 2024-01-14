@@ -1,15 +1,16 @@
 class Solution {
 public:
-int find_parent(int node, vector<int>&parent){
+
+int findparent(int node, vector<int>&parent){
     if(node==parent[node]){
         return node;
     }
-    return parent[node]=find_parent(parent[node],parent);
+    return parent[node]=findparent(parent[node],parent);
 }
 
-void union_set(int u, int v, vector<int>&parent, vector<int>&rank){
-    u=find_parent(u,parent);
-    v=find_parent(v,parent);
+void union_set(int u, int v, vector<int>&rank, vector<int> &parent){
+    u=findparent(u,parent);
+    v=findparent(v,parent);
     if(rank[u]>rank[v]){
         rank[u]++;
         parent[v]=u;
@@ -19,33 +20,32 @@ void union_set(int u, int v, vector<int>&parent, vector<int>&rank){
     }
 }
 
-    int minCostConnectPoints(vector<vector<int>>& points) {
-        int n=points.size();
+    int minCostConnectPoints(vector<vector<int>>& grid) {
+        int n=grid.size();
         vector<pair<int,pair<int,int>>>v;
         for(int i=0; i<n; i++){
-            for(int j=i+1; j<n; j++){
-                int distance=abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1]);
-                v.push_back({distance,{i,j}});
+            for(int j=0; j<n; j++){
+                int x=abs(grid[i][0]-grid[j][0])+abs(grid[i][1]-grid[j][1]);
+                v.push_back({x,{i,j}});
             }
         }
         sort(v.begin(),v.end());
         int m=v.size();
-        vector<int> parent(m+1,0);
         vector<int> rank(m+1,0);
+        int ans=0;
+        vector<int> parent(m+1,0);
         for(int i=0; i<=m; i++){
             parent[i]=i;
         }
-        int ans=0;
         for(int i=0; i<m; i++){
-            auto it=v[i];
-            int distance=it.first;
-            int x=it.second.first;
-            int y=it.second.second;
-            int u=find_parent(x,parent);
-            int v=find_parent(y,parent);
-            if(u!=v){
-                ans+=distance;
-                union_set(x,y,parent,rank);
+            int cost=v[i].first;
+            int a=v[i].second.first;
+            int b=v[i].second.second;
+            a=findparent(a,parent);
+            b=findparent(b,parent);
+            if(a!=b){
+                union_set(a,b,rank,parent);
+                ans+=cost;
             }
         }
         return ans;
