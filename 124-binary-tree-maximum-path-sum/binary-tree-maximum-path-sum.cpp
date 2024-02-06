@@ -25,9 +25,6 @@ int solve(TreeNode* root, int &ans){
         if(root==NULL){
             return 0;
         }
-        if(root->left==NULL && root->right==NULL){
-            return root->val;
-        }
         int ans=INT_MIN;
         solve(root,ans);
         return ans;
