@@ -15,29 +15,29 @@ public:
         if(root==NULL){
             return 0;
         }
-        queue<pair<TreeNode*,long long int>> q;
+        queue<pair<TreeNode*,long long int>>q;
         q.push({root,0});
         long long int ans=0;
         while(q.size()){
+            int n=q.size();
             long long int id=q.front().second;
             long long int first=0;
             long long int last=0;
-            int n=q.size();
             for(int i=0; i<n; i++){
-                long long int index=q.front().second-id;
                 TreeNode* curr=q.front().first;
+                long long int curr_id=q.front().second-id;
                 q.pop();
-                if(i==0){
-                    first=index;
-                }
-                if(i==n-1){
-                    last=index;
-                }
                 if(curr->left){
-                    q.push({curr->left,2*index+1});
+                    q.push({curr->left,2*curr_id});
                 }
                 if(curr->right){
-                    q.push({curr->right,2*index+2});
+                    q.push({curr->right,2*curr_id+1});
+                }
+                if(i==0){
+                    first=curr_id;
+                }
+                if(i==n-1){
+                    last=curr_id;
                 }
             }
             ans=max(last-first+1,ans);
